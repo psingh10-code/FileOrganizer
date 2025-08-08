@@ -54,3 +54,20 @@ def organize_folder(path):
         messages.append(f"Moved '{filename}' to '{destination_folder_name}'")
     
     return messages
+
+def search_for_file(folder_path, file_name_query):
+    """
+    Recursively searches for files matching a query in a given folder.
+    The search is case-insensitive and matches partial names.
+    Returns a list of full paths to the found files.
+    """
+    found_files = []
+    query = file_name_query.lower()
+
+    # os.walk is perfect for recursively walking through a directory
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            if query in file.lower():
+                found_files.append(os.path.join(root, file))
+    
+    return found_files
